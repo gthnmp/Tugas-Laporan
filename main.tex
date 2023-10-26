@@ -1,0 +1,157 @@
+\documentclass[letterpaper,11pt]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[margin=1in]{geometry}
+\usepackage{booktabs}
+\usepackage{tabu}
+\usepackage{pgfplots, pgfplotstable}
+\usepackage{ragged2e}
+\input{glyphtounicode}
+
+\setlength{\parskip}{1em}
+\setlength{\parindent}{0em}
+
+\begin{filecontents}{data.csv}
+  A,  B,  C,  D
+  1, 800, 1000, 700
+  2, 975, 1100, 750
+  3, 1150, 1200, 725
+  4, 1325, 1300, 710
+  5, 1500, 1400, 700
+  6, 1675, 1450, 775
+  7, 1850, 1350, 720
+  8, 2025, 1200, 710
+  9, 2200, 1050, 760
+  10, 2375, 900, 740
+  11, 2550, 750, 730
+  12, 2725, 600, 705
+\end{filecontents}
+\pgfplotstableread[col sep=comma,]{data.csv}\datatable
+
+\begin{document}
+  \begin{center}
+      \huge{Laporan Penjualan Sepatu Niki} \\[10pt]
+      \large{Ibrahim Pasya Arvianto}\\
+  \end{center}
+  \rule{\textwidth}{0.5pt}
+
+      \begin{abstract}
+      \noindent
+      Laporan ini memberikan gambaran rinci tentang penjualan sepatu olahraga merek Niki yang diproduksi oleh Perusahaan X selama tahun Y. Laporan ini mencakup informasi mengenai produksi, biaya, serta data penjualan bulanan. Selain itu, laporan ini juga dilengkapi dengan visualisasi grafik penjualan. \\
+
+      \noindent
+      Pada tahun Y, Perusahaan X berhasil memproduksi total sebanyak 50.000 pasang sepatu merek Niki, dengan perincian sebagai berikut: 21.500 pasang warna hitam, 15.000 pasang warna putih, dan 13.500 pasang warna biru. Biaya produksi sepatu-sepatu ini mencapai Rp 5.000.000.000. 
+      \end{abstract}
+      
+  \rule{\textwidth}{0.5pt}
+
+\section{Data Penjualan Sepatu Niki}
+
+  Pada tahun Y, perusahaan X memproduksi sepatu olahraga merek Niki dalam tiga warna: biru, hitam, dan putih. Harga setiap pasang sepatu Niki adalah Rp. 100.000, dan jumlah produksinya mencapai 50.000 pasang. Dari jumlah tersebut, 21.500 pasang adalah warna hitam, 15.000 pasang warna putih, dan 13.500 pasang warna biru, dengan biaya produksi total sekitar Rp 5.000.000.000.
+  
+  Namun, total penjualan selama tahun tersebut hanya mencapai 44.230 pasang. Ini berarti ada 5.770 pasang (50.000 - 44.230) yang tidak terjual hingga akhir tahun. Di bawah ini adalah data penjualan bulanan untuk sepatu Niki dari bulan Januari hingga Desember:
+
+  \begin{table}[ht]
+      \centering
+      \small 
+      \begin{tabu}{*{5}{X[c]}}
+          \toprule
+          Bulan & Hitam & Putih & Biru & Total \\
+          \midrule
+          Januari & 800 & 1000 & 700 & 2500 \\
+          Februari & 975 & 1100 & 750 & 2825 \\
+          Maret & 1150 & 1200 & 725 & 3075 \\
+          April & 1325 & 1300 & 710 & 3335 \\
+          Mei & 1500 & 1400 & 700 & 3600 \\
+          Juni & 1675 & 1450 & 775 & 3900 \\
+          Juli & 1850 & 1350 & 720 & 3920 \\
+          Agustus & 2025 & 1200 & 710 & 3940 \\
+          September & 2200 & 1050 & 760 & 4010 \\
+          Oktober & 2375 & 900 & 740 & 4015 \\
+          November & 2550 & 750 & 730 & 4030 \\
+          Desember & 2725 & 600 & 705 & 4030 \\
+          \bottomrule
+          Total & 21075 & 14450 & 8705 & 44230\\
+        \end{tabu}
+  \end{table}
+  
+\section{Analisis Penjualan Sepatu Niki}
+
+  \begin{enumerate}
+      \item Kinerja Penjualan Total:
+      \begin{itemize}
+          \item Total penjualan sepatu Niki sepanjang tahun Y mencapai 44.230 pasang.
+          \item Perusahaan telah memproduksi sebanyak 50.000 pasang sepatu Niki.
+          \item Artinya, terdapat sisa stok sebanyak 5.770 pasang (50.000 - 44.230) pada akhir tahun.
+      \end{itemize}
+
+      \item Kinerja Penjualan Bulanan:
+      \begin{itemize}
+          \item Kinerja penjualan bulanan bervariasi untuk setiap warna sepatu Niki.
+          \item Penjualan sepatu hitam menunjukkan kenaikan yang stabil, yakni peningkatan 175 pasang sepatu setiap bulan. 
+          \item Sebaliknya, penjualan sepatu putih menunjukkan stabilitas relatif dalam dua kuartal pertama (Q1-Q2), namun mengalami penurunan setelah Q3.          
+          \item Penjualan sepatu biru tetap menunjukan kinerja yang relatif stabil, dengan angka penjualan konsisten di kisaran 700 unit. 
+      \end{itemize}
+      
+      \begin{center}
+        \begin{tikzpicture}
+          \begin{axis}[
+              width=10cm,
+              xlabel={Bulan},
+              xtick=data,
+              xticklabels from table={\datatable}{A},
+              ymajorgrids,
+              legend pos=north west
+          ]
+            
+            \addplot[mark=*, mark size=2pt, color=red!70!black] table [x expr=\coordindex, y=B]{\datatable};
+            \addlegendentry{Hitam}
+            
+            \addplot[mark=square*, mark size=2pt, color=gray!80] table [x expr=\coordindex, y=C]{\datatable};
+            \addlegendentry{Putih}
+            
+            \addplot[mark=triangle*, mark size=2pt, color=cyan] table [x expr=\coordindex, y=D]{\datatable};
+            \addlegendentry{Biru}
+          \end{axis}
+        \end{tikzpicture}
+      \end{center}
+
+      \item Pendapatan yang Dihasilkan:
+      \begin{itemize}
+          \item Harga setiap pasang sepatu Niki adalah Rp. 100.000.
+          \item Untuk menghitung pendapatan yang dihasilkan, kita dapat mengalikan total penjualan untuk setiap warna dengan harga per pasang:
+          \begin{itemize}
+              \item Pendapatan dari sepatu hitam = 21.075 pasang x Rp. 100.000 = Rp. 2.107.500.000
+              \item Pendapatan dari sepatu putih = 14.450 pasang x Rp. 100.000 = Rp. 1.445.000.000
+              \item Pendapatan dari sepatu biru = 8.705 pasang x Rp. 100.000 = Rp. 870.500.000
+          \end{itemize}
+          \item Total pendapatan sepanjang tahun Y adalah Rp. 4.423.000.000.
+          \\
+      \end{itemize} 
+
+      \item Kinerja Sepatu Hitam, Putih, dan Biru:
+      \begin{itemize}
+          \item Sepatu hitam memiliki penjualan tertinggi sepanjang tahun, dengan total 21.075 pasang terjual.
+          \item Sepatu putih memiliki penjualan kedua tertinggi, dengan 14.450 pasang terjual.
+          \item Sepatu biru memiliki penjualan terendah, dengan 8.705 pasang terjual.
+          \item Sepatu hitam secara konsisten mengungguli dua warna lainnya setiap bulan.
+      \end{itemize}
+  \end{enumerate}
+  
+\section{Kesimpulan dan Rekomendasi}
+  Berdasarkan laporan yang diberikan, kami dapat menyimpulkan bahwa:
+
+  \begin{enumerate}
+      \item Kinerja penjualan menunjukkan bahwa ada stok sisa sebanyak 5.770 pasang pada akhir tahun, karena total penjualan (44.230 pasang) lebih rendah dari jumlah produksi (50.000 pasang)
+      \item Penjualan sepatu Niki berfluktuasi setiap bulan, dengan permintaan tinggi untuk sepatu hitam menjelang akhir tahun, sedangkan penjualan sepatu putih mengalami penurunan setelah Q3. Penjualan sepatu biru cenderung stabil.
+      \item Pendapatan dari penjualan sepatu mencapai Rp 4.423.000.000 sepanjang tahun, dengan sepatu hitam mendominasi, diikuti oleh sepatu putih dan sepatu biru.
+      \item Sepatu hitam secara konsisten unggul dalam penjualan, sedangkan sepatu biru memiliki penjualan terendah.
+  \end{enumerate}
+  
+  kami memberikan beberapa rekomendasi untuk perusahaan:
+  \begin{itemize}
+      \item Meningkatkan produksi sepatu warna hitam menjelang akhir tahun untuk mengakomodasi permintaan tinggi dan meminimalkan stok tersisa.
+      \item Menganalisis faktor-faktor yang menyebabkan penurunan penjualan sepatu warna putih setelah Q3 dan mencari strategi untuk mengatasi penurunan tersebut.
+      \item Mengkaji strategi pemasaran dan promosi untuk sepatu warna biru guna meningkatkan penjualan atau mempertahankan kinerja yang stabil.
+  \end{itemize}
+\end{document}
